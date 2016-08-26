@@ -53,4 +53,34 @@ public class CommonHeaderLayout extends FrameLayout{
     public void setIsHide(boolean hide) {
         mHide = hide;
     }
+
+    public void setScrollView(OutSideScrollView scrollView) {
+        mScorllView = scrollView;
+    }
+
+    public OutSideScrollView getScrollView() {
+        return mScorllView;
+    }
+
+    public void open() {
+        if (!mHide) {
+            return;
+        }
+
+        mScorllView.scrollTo(0, 0);
+//      scroll y offset is 0 - (-getMeasuredHeight)
+        scrollTo(0, getMeasuredHeight());
+//      use Scroller delegate view's scrollTo() method callback computeScroll
+        mScroller.startScroll(0, getMeasuredHeight(), 0, -getMeasuredHeight(), 1000);
+        invalidate();
+    }
+
+    @Override
+    public void computeScroll() {
+        super.computeScroll();
+        if (mScroller.computeScrollOffset()) {
+            scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+            postInvalidate();
+        }
+    }
 }

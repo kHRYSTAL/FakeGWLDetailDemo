@@ -47,4 +47,6 @@ public class OutSideScrollView extends ScrollView{
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return super.onInterceptTouchEvent(ev);
     }
+
+
 }
