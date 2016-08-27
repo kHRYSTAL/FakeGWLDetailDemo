@@ -62,7 +62,7 @@ public class CommonHeaderLayout extends FrameLayout{
         return mScorllView;
     }
 
-    public void open() {
+    public void close() {
         if (!mHide) {
             return;
         }
