@@ -14,27 +14,27 @@ import android.widget.ScrollView;
  * update time:
  * email: 723526676@qq.com
  */
-public class OutSideScrollView extends ScrollView{
+public class OutsideScrollView extends ScrollView{
 
     private int mDownY;
     private int mMoveY;
     private CommonHeaderLayout mHeaderLayout;
-    private OutSideDownLinearLayout mBodyLayout;
+    private OutsideDownLinearLayout mBodyLayout;
 
-    public OutSideScrollView(Context context) {
+    public OutsideScrollView(Context context) {
         this(context, null);
     }
 
-    public OutSideScrollView(Context context, AttributeSet attrs) {
+    public OutsideScrollView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public OutSideScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public OutsideScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public OutSideScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public OutsideScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
@@ -43,7 +43,7 @@ public class OutSideScrollView extends ScrollView{
         super.onScrollChanged(l, t, oldl, oldt);
 
         if (t >= mHeaderLayout.getMeasuredHeight() * 0.7
-                && mBodyLayout.getCurrentState() == OutSideDownLinearLayout.DRAG_STATE_DOWN) {
+                && mBodyLayout.getCurrentState() == OutsideDownLinearLayout.DRAG_STATE_HIDE) {
             mHeaderLayout.setIsHide(true);
         } else {
             mHeaderLayout.setIsHide(false);
@@ -71,8 +71,8 @@ public class OutSideScrollView extends ScrollView{
         if (offset > 0)
             return super.onInterceptTouchEvent(ev);
 
-        if (getScrollY() == 0 && (mBodyLayout.getCurrentState() == OutSideDownLinearLayout.DRAG_STATE_UP
-                || mBodyLayout.getCurrentState() == OutSideDownLinearLayout.DRAG_STATE_MOVE)) {
+        if (getScrollY() == 0 && (mBodyLayout.getCurrentState() == OutsideDownLinearLayout.DRAG_STATE_SHOW
+                || mBodyLayout.getCurrentState() == OutsideDownLinearLayout.DRAG_STATE_MOVE)) {
             return false;
         }
 
@@ -81,12 +81,12 @@ public class OutSideScrollView extends ScrollView{
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        if (mBodyLayout.getCurrentState() == OutSideDownLinearLayout.DRAG_STATE_DOWN)
+        if (mBodyLayout.getCurrentState() == OutsideDownLinearLayout.DRAG_STATE_HIDE)
             return false;
         return super.onTouchEvent(ev);
     }
 
-    public void setOutSideDownLinearLayout(OutSideDownLinearLayout bodyLayout) {
+    public void setOutSideDownLinearLayout(OutsideDownLinearLayout bodyLayout) {
         mBodyLayout = bodyLayout;
     }
 

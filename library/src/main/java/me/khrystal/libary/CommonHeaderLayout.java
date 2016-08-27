@@ -18,7 +18,7 @@ public class CommonHeaderLayout extends FrameLayout{
 
     private Scroller mScroller;
     private boolean mHide;
-    private OutSideScrollView mScorllView;
+    private OutsideScrollView mScorllView;
 
 
     public CommonHeaderLayout(Context context) {
@@ -54,15 +54,15 @@ public class CommonHeaderLayout extends FrameLayout{
         mHide = hide;
     }
 
-    public void setScrollView(OutSideScrollView scrollView) {
+    public void setScrollView(OutsideScrollView scrollView) {
         mScorllView = scrollView;
     }
 
-    public OutSideScrollView getScrollView() {
+    public OutsideScrollView getScrollView() {
         return mScorllView;
     }
 
-    public void close() {
+    public void showWithAnim() {
         if (!mHide) {
             return;
         }

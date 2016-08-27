@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<me.khrystal.libary.CommonHeaderLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+    <TextView
+        android:id="@+id/header_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="36sp"
+        android:textColor="@android:color/white"
+        android:background="#ff9800" />
+</me.khrystal.libary.CommonHeaderLayout>

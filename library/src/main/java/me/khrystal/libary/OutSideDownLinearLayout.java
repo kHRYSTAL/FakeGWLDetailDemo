@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
@@ -17,7 +18,7 @@ import android.widget.Scroller;
  * update time:
  * email: 723526676@qq.com
  */
-public class OutSideDownLinearLayout extends LinearLayout{
+public class OutsideDownLinearLayout extends LinearLayout{
 
     private Scroller mScroller;
     private CommonHeaderLayout mHeaderLayout;
@@ -27,27 +28,27 @@ public class OutSideDownLinearLayout extends LinearLayout{
     private int mMoveY;
     private static int DRAG_Y_MAX = 220;
 
-    public static final int DRAG_STATE_UP = 1;
-    public static final int DRAG_STATE_DOWN = 2;
+    public static final int DRAG_STATE_SHOW = 1;
+    public static final int DRAG_STATE_HIDE = 2;
     public static final int DRAG_STATE_MOVE = 3;
 
-    public int mCurrentState = DRAG_STATE_UP;
+    public int mCurrentState = DRAG_STATE_SHOW;
 
-    public OutSideDownLinearLayout(Context context) {
+    public OutsideDownLinearLayout(Context context) {
         this(context, null);
     }
 
-    public OutSideDownLinearLayout(Context context, AttributeSet attrs) {
+    public OutsideDownLinearLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public OutSideDownLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public OutsideDownLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public OutSideDownLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public OutsideDownLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
@@ -74,8 +75,9 @@ public class OutSideDownLinearLayout extends LinearLayout{
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mCurrentState == DRAG_STATE_DOWN)
+        if (mCurrentState == DRAG_STATE_HIDE) {
             return false;
+        }
         float y = event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -87,7 +89,7 @@ public class OutSideDownLinearLayout extends LinearLayout{
                 if (getScrollY() <= 0) {
                     mCurrentState = DRAG_STATE_MOVE;
                     //step by step
-                    scrollBy(0, moveY / 2);
+                    this.scrollBy(0, moveY / 2);
                 }
                 mLastY = y;
                 break;
@@ -102,20 +104,21 @@ public class OutSideDownLinearLayout extends LinearLayout{
     private void process() {
 //        hide this layout
         if (-getScrollY() > DRAG_Y_MAX) {
-            mCurrentState = DRAG_STATE_DOWN;
+            mCurrentState = DRAG_STATE_HIDE;
             mHeaderLayout.setVisibility(INVISIBLE);
 //            this layout need move offset in order to hide
             mMoveY = Math.abs(-getMeasuredHeight() - getScrollY());
             mScroller.startScroll(0, getScrollY(), 0, -mMoveY, 1000);
         } else { //reset
-            mCurrentState = DRAG_STATE_UP;
+            mCurrentState = DRAG_STATE_SHOW;
             mScroller.startScroll(0, getScrollY(), 0, -getScrollY(), Math.abs(getScrollY()) / 2);
         }
+
         invalidate();
     }
 
-    public void outSideDownLinearLayoutclose() {
-        mCurrentState = DRAG_STATE_UP;
+    public void showWithAnim() {
+        mCurrentState = DRAG_STATE_SHOW;
         mHeaderLayout.setVisibility(VISIBLE);
         mScroller.startScroll(0, -mMoveY, 0, mMoveY, 1000);
 //        when outsidescrollview is close recyclerview scroll to top
@@ -132,6 +135,7 @@ public class OutSideDownLinearLayout extends LinearLayout{
     public void computeScroll() {
         if (mScroller.computeScrollOffset()) {
             scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+            Log.d("Scroller", mScroller.getCurrY() + "");
             postInvalidate();
         }
     }

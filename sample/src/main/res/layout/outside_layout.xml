@@ -1,0 +1,30 @@
+<me.khrystal.libary.OutsideScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!-- header -->
+        <include layout="@layout/header_layout"/>
+        <!-- body -->
+        <me.khrystal.libary.OutsideDownLinearLayout
+            android:id="@+id/body"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="800dp">
+            <TextView
+                android:text="Drag Down"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f0f"
+                android:gravity="center_horizontal"
+                />
+        </me.khrystal.libary.OutsideDownLinearLayout>
+    </LinearLayout>
+</me.khrystal.libary.OutsideScrollView>
